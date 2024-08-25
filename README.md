@@ -12,4 +12,4 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 ## 准备工作
 
-见[Setup.md](a)
+见[Setup.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Setup.md)
