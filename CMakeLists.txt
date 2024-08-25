@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
+# Change the project name to your own here
 project(mobile_bot)
 
 # Default to C99
