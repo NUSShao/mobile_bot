@@ -10,4 +10,5 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 以上是来自原作者Josh Newans（油管频道叫做Articulated Robotics）的Introduction。
 
-现在，你可以通过访问'https://github.com/joshnewans/my_bot/tree/main'，点击右上角的“Use this template”绿色按钮来在自己的github repository中创建一个ROS Package。qqq
+现在，你可以通过访问'https://github.com/joshnewans/my_bot/tree/main'
+点击右上角的“Use this template”绿色按钮来在自己的github repository中创建一个ROS Package。qqq
