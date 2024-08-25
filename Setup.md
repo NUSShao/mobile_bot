@@ -46,3 +46,21 @@
 回到GitHub网页端，这时发现我们新创建的文件已经上传到项目仓库中了：
 
 ![更新成功](img/NewTxtFile3.jpg)
+
+## 构建自己的项目
+
+在项目代码编写完成之后，需要对Package进行构建（build）：
+
+首先，按下'Ctrl+Alt+T'打开一个终端；随后，利用'cd'指令进入到workspace一级当中，并输入：
+
+`colcon build`
+
+在构建完成后，需要source一下我们的Package：
+
+`source ~/dev_ws(这里改为你自己的workspace名字)/install/setup.bash`
+
+为了避免重复进行source操作的麻烦，我们在终端中输入：
+
+`gedit ~/.bashrc`
+
+随后，将上述source的一行代码复制粘贴到.bashrc文件的末尾。这样，在我们每次打开一个Terminal的时候，系统自动运行source指令，无需我们再次重复操作。
