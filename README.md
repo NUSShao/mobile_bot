@@ -10,8 +10,21 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 以上是来自原作者Josh Newans（油管频道叫做Articulated Robotics）的Introduction。
 
+## 创建自己的项目仓库
+
 现在，你可以通过访问'https://github.com/joshnewans/my_bot/tree/main'
 点击右上角的“Use this template”绿色按钮来在自己的github repository中创建一个ROS Package。
 
 ![使用模板创建自己的Repository](img/UseTemplate.jpg)
 
+随后，我们需要将模板中的项目名字，改为我们自己的项目名字：
+
+单击键盘上的'.'键，打开github自带的网页编辑器，再按下'Ctrl+Shift+F'，搜索'my_bot'，将其改为自己的项目名字（我这里是叫做mobile_bot）
+
+![更换项目名字1](img/ChangeProjectName.jpg)
+
+![更换项目名字2](img/ChangeProjectName2.jpg)
+
+## 克隆项目仓库到本地
+
+创建好项目仓库之后，
