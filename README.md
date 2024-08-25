@@ -27,4 +27,34 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 ## 克隆项目仓库到本地
 
-创建好项目仓库之后，
+创建好项目仓库之后，我们要创建一个自己的ROS工作空间。这里不赘述如何创建。
+
+随后，进入到工作空间的src子文件夹，在Terminal中克隆项目仓库到本地：
+
+`git clone ${你自己的项目仓库URL}`
+
+打开VSCode，进入到我们刚刚克隆好的项目仓库当中。
+
+![打开文件夹](img/OpenFolder.jpg)
+
+接下来，为了同步本地更新到GitHub上，我们需要下载GitHub Pull插件：
+
+![插件](img/GithubPullExtension.jpg)
+
+随后，在下方的Terminal中更新自己的用户名和邮箱：
+
+![输入用户名和邮箱](img/SetUserInfo.jpg)
+
+现在，我们就可以将本地的变更同步到Github上面了。
+
+我们随便创建一个文件，试一下效果：
+
+![创建新文件](img/NewTxtFile.jpg)
+
+接下来，在左侧的更新Tab中，选择Commit你的变更，并且在弹出的文件中，输入你的更新说明文字，点击右上角的√，进行Commit：
+
+![输入说明文字](img/NewTxtFile2.jpg)
+
+回到GitHub网页端，这时发现我们新创建的文件已经上传到项目仓库中了：
+
+![更新成功](img/NewTxtFile3.jpg)
