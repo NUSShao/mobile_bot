@@ -103,7 +103,7 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
     <origin xyz="0 0 0" />
 </joint>
 <!-- chassis link -->
-<link name="chassis_link" type="continuous">
+<link name="chassis_link">
     <visual>
         <geometry>
             <box size="0.3 0.3 0.15" />
