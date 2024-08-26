@@ -31,7 +31,7 @@
         <origin xyz="-0.1 0 0" />
     </joint>
     
-    <link name="chassis_link" type="continuous">
+    <link name="chassis_link">
         <visual>
             <geometry>
                 <box size="0.3 0.3 0.15" />
@@ -41,6 +41,8 @@
         </visual>
     </link>
 
+    <!-- left wheel link -->
 
+    <link name="left_wheel_link" 
 
 </robot>
