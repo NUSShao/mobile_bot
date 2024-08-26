@@ -43,3 +43,58 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 
 `<xacro:include filename="robot_core.xacro"/>`
 
+随后，我们为新建的xacro文件套用模板(注意，这里的robot标签中删掉了name属性，因为这个文件只作为引用文件)：
+
+```
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="base_link"></link>
+
+</robot>
+```
+
+在开始编写文件之前，推荐大家从左侧Extension栏中安装XML插件，然后从右下角的文件类型处，将格式选择为XML格式：
+
+![点击右下角](img/ChangeFileFormat1.jpg)
+
+![搜索XML格式](img/ChangeFileFormat2.jpg)
+
+接下来正式开始编写机器人主体框架。
+
+首先，创造一些material标签，用来为模型的各个link上色：
+
+```
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1" />
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1" />
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1" />
+    </material>
+
+    <link name="base_link"></link>
+
+</robot>
+```
+
+这里为了方便大家理解文件的构成，把整体代码放上去了。
+
+后面为了简洁性，只展示新增的代码片段（[整体代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/robot_core.xacro)）
+
+接下来，我们先不管base link，先把底盘（chassis）部分写好，我们需要首先利用一个fixed类型的joint来连接Chassis和base link，然后再编写Chassis link：
+
+```
+
+```

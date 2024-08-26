@@ -2,7 +2,7 @@
 
 ## 创建自己的项目仓库
 
-现在，你可以通过访问'https://github.com/joshnewans/my_bot/tree/main'
+现在，你可以通过访问[JoshNewans大神提供的模板](https://github.com/joshnewans/my_bot/tree/main)
 点击右上角的“Use this template”绿色按钮来在自己的github repository中创建一个ROS Package。
 
 ![使用模板创建自己的Repository](img/UseTemplate.jpg)
