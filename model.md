@@ -96,5 +96,84 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 接下来，我们先不管base link，先把底盘（chassis）部分写好，我们需要首先利用一个fixed类型的joint来连接Chassis和base link，然后再编写Chassis link：
 
 ```
+<!-- joint between base and chassis -->
+<joint name="base_chassis_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="chassis_link" />
+    <origin xyz="0 0 0" />
+</joint>
+<!-- chassis link -->
+<link name="chassis_link" type="continuous">
+    <visual>
+        <geometry>
+            <box size="0.3 0.3 0.15" />
+        </geometry>
+        <material name="white" />
+        <origin xyz="0 0 0" />
+    </visual>
+</link>
+```
+
+注意，这里joint与chassis link的origin都放在了(0,0,0)的位置。
+
+接下来，我们将编译package，利用Rviz2来调整原点坐标。
+
+首先，打开Terminal，输入以下指令：
 
 ```
+cd ~/(你自己workspace的名字)
+colcon build --symlink-install
+```
+
+这里，编译中的 **--symlink-install**选项可以对package中 **已有文件的变更执行自动编译**。因此，除非你在项目中新建了代码文件，否则你不需要再次进行编译。
+
+接下来，我们将运行launch文件，运行ros2中的robot state publisher：
+
+`ros2 launch (你自己project的名字) rsp.launch.py`
+
+这样，ROS2就根据我们的URDF/XACRO文件开始发布机器人的状态信息。
+
+接下来，我们启动Rviz2，在可视化的条件下调整坐标系的原点位置。另外启动一个Terminal，输入：
+
+`Rviz2`
+
+然后，根据以下顺序进行设置好TF(Transform)，就可以看到base link以及chassis link各自的坐标系：
+
+![设置Rviz2](img/Rviz2Setting.jpg)
+
+![展示坐标系名称](img/TFShowName.jpg)
+
+![坐标系重叠](img/CoodinateOverlap.jpg)
+
+现在，我们的坐标系出现了重叠。实际上，我们想要的效果是这样的（图片来源于JoshNewans大佬的视频）：
+
+![Chassis坐标系Origin](img/ChassisOrigin.jpg)
+
+其中，base link的原点位于两个后轮的中间点；而chassis link的原点则位于地盘的后方中间点。
+
+因此，我们将base_chassis_joint的origin位置调整为：
+
+`<origin xyz="-0.1 0 0" />`
+
+随后，我们打开运行launch文件的Terminal，按下Ctrl+C，然后按下↑，重新运行launch文件，来更新Rviz2中的视觉效果：
+
+![Chassis坐标系Origin2](img/ChassisOrigin2.jpg)
+
+接下来，我们调整底盘的几何形状位置。首先，添加一个RobotModel：
+
+![打开RobotModel显示1](img/AddRobotModel.jpg)
+
+然后，调整Description Topic为/robot_description，并设置α（透明度）为0.8：
+
+![打开RobotModel显示2](img/RobotModelSetting.jpg)
+
+可以看到，现在的Box是以chassis link坐标系的原点为中心，我们想要做出以下调整（图片来自[JoshNewans的视频](https://www.youtube.com/watch?v=BcjHyhV0kIs&list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT&index=3)）：
+
+![调整Box视觉位置](img/SwitchChassisCenter.gif)
+
+`<origin xyz="0.15 0 0.075" />`
+
+![调整后的Box位置](img/ChassisOrigin3.jpg)
+
+现在，我们的底盘位置就如我们所愿了。
+
