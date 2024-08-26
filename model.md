@@ -278,8 +278,68 @@ ros2 run joint_state_publisher_gui joint_state_publisher_gui
 
 接下来，我们要为每个link添加它们自己的碰撞（Collision）属性以及惯性（inertial）属性。
 
-首先，以  link为例：
+首先是碰撞属性，以chassis link为例：
 
 ```
+    <collision>
+        <geometry>
+            <box size="0.3 0.3 0.15" />
+        </geometry>
+        <origin xyz="0.15 0 0.075" />
+    </collision>
+```
+
+这里，我们对于碰撞属性的描述，和外观属性几乎一致（删去了material一行）。
+
+对于其他link，我们如法炮制。全部完成后，我们重新launch状态发布器，在Rviz2中勾选"Collision Enabled"一栏，可以看到模型现在的碰撞体积（其实和视觉长得一样）：
+
+![模型的碰撞体积](img/CollisionVisible.jpg)
+
+随后，我们编辑惯性属性。
+
+由于为每个link单独计算惯性矩阵（inertial matrix）是一件很麻烦的事情，所以我们需要单独编写一个用于计算惯性矩阵的xacro扩展文件。
+
+所幸JoshNewans大神已经为我们写好了这个[惯性矩阵计算文件](https://github.com/joshnewans/articubot_one/blob/d5aa5e9bc9039073c0d8fd7fe426e170be79c087/description/inertial_macros.xacro)。
+
+因此，我们只需在description文件夹下新建一个"inertial_macros.xacro"文件，并且将内容复制进去即可。
+
+此外，不要忘记重新编译整个项目，因为我们新建了一个xacro文件：
 
 ```
+cd ~/（你的workspace名字）
+colcon build --symlink-install
+```
+
+现在，我们只需在robot_core.xacro文件的开头引用惯性矩阵计算文件，就可以很方便地为每一个link添加其inertial属性了：
+
+`<xacro:include filename="inertial_macros.xacro" />`
+
+这里还是以chassis link为例。
+
+在inertial_macros.xacro文件中，JoshNewans大佬写好的惯量矩阵计算代码如下：
+
+```
+    <xacro:macro name="inertial_box" params="mass x y z *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (y*y+z*z)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (x*x+z*z)}" iyz="0.0"
+                    izz="${(1/12) * mass * (x*x+y*y)}" />
+        </inertial>
+    </xacro:macro>
+```
+
+因此，我们可以在robot_core.xacro中，直接传入参数调用它：
+
+```
+    <xacro:inertial_box mass="0.5" x="0.3" y="0.3" z="0.15">
+        <origin xyz="0.15 0 0.075" rpy="0 0 0" />
+    </xacro:inertial_box>
+```
+
+在完成编辑所有link对应的inertial属性后，我们完成了模型描述文件的编辑。
+
+随后，我们在Rviz2界面点击左上角File->Save Config As，并且将我们的config文件存储到以下路径，以便后续调用Rviz2查看模型：
+
+![将Rviz2的config文件存储](img/SaveRvizConfig.jpg)
