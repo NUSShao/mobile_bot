@@ -100,22 +100,22 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 接下来，我们先不管base link，先把底盘（chassis）部分写好，我们需要首先利用一个fixed类型的joint来连接Chassis和base link，然后再编写Chassis link：
 
 ```
-<!-- joint between base and chassis -->
-<joint name="base_chassis_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="chassis_link" />
-    <origin xyz="0 0 0" />
-</joint>
-<!-- chassis link -->
-<link name="chassis_link">
-    <visual>
-        <geometry>
-            <box size="0.3 0.3 0.15" />
-        </geometry>
-        <material name="white" />
+    <!-- joint between base and chassis -->
+    <joint name="base_chassis_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="chassis_link" />
         <origin xyz="0 0 0" />
-    </visual>
-</link>
+    </joint>
+    <!-- chassis link -->
+    <link name="chassis_link">
+        <visual>
+            <geometry>
+                <box size="0.3 0.3 0.15" />
+            </geometry>
+            <material name="white" />
+            <origin xyz="0 0 0" />
+        </visual>
+    </link>
 ```
 
 注意，这里joint与chassis link的origin都放在了(0,0,0)的位置。
@@ -190,27 +190,27 @@ colcon build --symlink-install
 ![编辑左轮的joint origin](img/SwitchWheelCenter.gif)
 
 ```
-<!-- left wheel link -->
+    <!-- left wheel link -->
 
-<joint name="base_left_wheel_joint" type="continuous">
-    <parent link="base_link" />
-    <child link="left_wheel_link" />
-    <origin xyz="0 0.175 0" rpy="-${pi/2} 0 0" />
-    <axis xyz="0 0 1" />
-</joint> 
+    <joint name="base_left_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="left_wheel_link" />
+        <origin xyz="0 0.175 0" rpy="-${pi/2} 0 0" />
+        <axis xyz="0 0 1" />
+    </joint> 
 ```
 
 然后，编辑左轮的link：
 
 ```
-<link name="left_wheel_link">
-    <visual>
-        <geometry>
-            <cylinder radius="0.05" length="0.04" />
-        </geometry>
-        <material name="blue" />
-    </visual>
-</link>
+    <link name="left_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.04" />
+            </geometry>
+            <material name="blue" />
+        </visual>
+    </link>
 ```
 
 右轮和左轮情况一样，对称一下即可：
@@ -244,3 +244,32 @@ ros2 run joint_state_publisher_gui joint_state_publisher_gui
 打开Rviz2，我们现在可以通过状态发布器GUI（图形界面）来控制轮子转动了：
 
 ![控制轮子转动](img/WheelsInRviz2.gif)
+
+### 前轮（caster wheel）
+
+接下来，我们简单地将前轮（脚轮，caster wheel）设置为一个无摩擦的球体（sphere）(我们会在后续设置其他属性，目前只考虑外形)：
+
+```
+    <!-- caster wheel link -->
+
+    <joint name="chassis_caster_wheel_joint" type="fixed">
+        <parent link="chassis_link" />
+        <child link="caster_wheel_link" />
+        <origin xyz="0.24 0 0" />
+    </joint>
+
+    <link name="caster_wheel_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.05" />
+            </geometry>
+            <material name="black" />
+        </visual>
+    </link>
+```
+
+同样，在按下Ctrl+S保存改动之后，我们在Terminal当中重新运行State Publisher launch文件，便可以在Rviz2中看到我们刚刚加的脚轮：
+
+![在Rviz2中看到的脚轮](img/CasterWheel.jpg)
+
+### 
