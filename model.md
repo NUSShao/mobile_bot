@@ -343,3 +343,10 @@ colcon build --symlink-install
 随后，我们在Rviz2界面点击左上角File->Save Config As，并且将我们的config文件存储到以下路径，以便后续调用Rviz2查看模型：
 
 ![将Rviz2的config文件存储](img/SaveRvizConfig.jpg)
+
+现在，我们只需要在Terminal中运行以下代码，就可以在Rviz2中查看模型：
+
+```
+cd ~/(你的工作空间名字)/src/(你的project名字)
+rviz2 -d config/view_bot.rviz
+```
