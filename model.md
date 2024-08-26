@@ -149,7 +149,7 @@ colcon build --symlink-install
 
 ![Chassis坐标系Origin](img/ChassisOrigin.jpg)
 
-其中，base link的原点位于两个后轮的中间点；而chassis link的原点则位于地盘的后方中间点。
+其中，base link的原点位于两个后轮的中间点；而chassis link的原点则位于底盘的后方中间点。
 
 因此，我们将base_chassis_joint的origin位置调整为：
 
