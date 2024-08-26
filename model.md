@@ -272,4 +272,14 @@ ros2 run joint_state_publisher_gui joint_state_publisher_gui
 
 ![在Rviz2中看到的脚轮](img/CasterWheel.jpg)
 
-### 
+### 碰撞（Collision）属性以及惯性（inertial）属性
+
+我们现在已经完成了小车机械结构组件的外观（visual）属性编辑。
+
+接下来，我们要为每个link添加它们自己的碰撞（Collision）属性以及惯性（inertial）属性。
+
+首先，以  link为例：
+
+```
+
+```

@@ -39,6 +39,12 @@
             <material name="white" />
             <origin xyz="0.15 0 0.075" />
         </visual>
+        <collision>
+            <geometry>
+                <box size="0.3 0.3 0.15" />
+            </geometry>
+            <origin xyz="0.15 0 0.075" />
+        </collision>
     </link>
 
     <!-- left wheel link -->
