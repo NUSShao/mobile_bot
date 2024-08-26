@@ -79,8 +79,8 @@
 
         <!-- caster wheel link -->
 
-        <joint name="base_caster_wheel_joint" type="fixed">
-            <parent link="base_link" />
+        <joint name="chassis_caster_wheel_joint" type="fixed">
+            <parent link="chassis_link" />
             <child link="caster_wheel_link" />
             <origin xyz="0.24 0 0" />
         </joint>
@@ -90,7 +90,7 @@
                 <geometry>
                     <sphere radius="0.05" />
                 </geometry>
-                <material name="blue" />
+                <material name="black" />
             </visual>
         </link>
 
