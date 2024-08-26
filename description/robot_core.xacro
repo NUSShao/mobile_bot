@@ -63,6 +63,11 @@
             </geometry>
             <material name="blue" />
         </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.05" length="0.04" />
+            </geometry>
+        </collision>
     </link>
 
         <!-- right wheel link -->
@@ -81,6 +86,11 @@
                 </geometry>
                 <material name="blue" />
             </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="0.05" length="0.04" />
+                </geometry>
+            </collision>
         </link>
 
         <!-- caster wheel link -->
@@ -98,6 +108,11 @@
                 </geometry>
                 <material name="black" />
             </visual>
+            <collision>
+                <geometry>
+                    <sphere radius="0.05" />
+                </geometry>
+            </collision>
         </link>
 
 </robot>
