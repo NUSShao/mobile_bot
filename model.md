@@ -62,6 +62,8 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 
 接下来正式开始编写机器人主体框架。
 
+### material标签
+
 首先，创造一些material标签，用来为模型的各个link上色：
 
 ```
@@ -92,6 +94,8 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 这里为了方便大家理解文件的构成，把整体代码放上去了。
 
 后面为了简洁性，只展示新增的代码片段（[整体代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/robot_core.xacro)）
+
+### 底盘（chassis link）
 
 接下来，我们先不管base link，先把底盘（chassis）部分写好，我们需要首先利用一个fixed类型的joint来连接Chassis和base link，然后再编写Chassis link：
 
@@ -177,3 +181,66 @@ colcon build --symlink-install
 
 现在，我们的底盘位置就如我们所愿了。
 
+### 后轮（Wheel link）
+
+有了之前底盘的经验，我们这里简短介绍。
+
+首先，编辑左轮的joint origin：
+
+![编辑左轮的joint origin](img/SwitchWheelCenter.gif)
+
+```
+<!-- left wheel link -->
+
+<joint name="base_left_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="left_wheel_link" />
+    <origin xyz="0 0.175 0" rpy="-${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+</joint> 
+```
+
+然后，编辑左轮的link：
+
+```
+<link name="left_wheel_link">
+    <visual>
+        <geometry>
+            <cylinder radius="0.05" length="0.04" />
+        </geometry>
+        <material name="blue" />
+    </visual>
+</link>
+```
+
+右轮和左轮情况一样，对称一下即可：
+
+```
+    <!-- right wheel link -->
+
+    <joint name="base_right_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="left_right_link" />
+        <origin xyz="0 -0.175 0" rpy="${pi/2} 0 0" />
+        <axis xyz="0 0 -1" />
+    </joint>
+
+    <link name="right_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.04" />
+            </geometry>
+            <material name="blue" />
+        </visual>
+    </link>
+```
+
+随后，我们重新launch状态发布器(Ctrl+C, ↑, Enter)，并且打开一个新的Terminal，运行joint_state_publisher_gui:
+
+```
+ros2 run joint_state_publisher_gui joint_state_publisher_gui 
+```
+
+打开Rviz2，我们现在可以通过状态发布器GUI（图形界面）来控制轮子转动了：
+
+![控制轮子转动](img/WheelsInRviz2.gif)
