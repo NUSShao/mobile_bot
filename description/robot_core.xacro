@@ -17,16 +17,20 @@
         <color rgba="0 0 0 1" />
     </material>
 
+    <!-- base link -->
+
     <link name="base_link">
         <!--  -->
     </link>
-    <!-- joint between base and chassis -->
+
+    <!-- chassis link -->
+
     <joint name="base_chassis_joint" type="fixed">
         <parent link="base_link" />
         <child link="chassis_link" />
         <origin xyz="-0.1 0 0" />
     </joint>
-    <!-- chassis link -->
+    
     <link name="chassis_link" type="continuous">
         <visual>
             <geometry>
