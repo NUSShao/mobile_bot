@@ -110,3 +110,27 @@ colcon build --symlink-install
 ![仿真总体系统架构](img/SimuOverallDiagram.jpg)
 
 值得注意的是，这里我们使用的控制插件会另外输出一个`odom`坐标系，通过对比它与`base_link`之间的Transform，我们可以知道机器人当前的位置。
+
+## 添加Gazebo控制插件
+
+为了在Gazebo中实现控制，我们在`~/(工作空间名字)/src/(package名字)/description`路径下新建一个`gazebo_control.xacro`文件，用于添加控制插件。在新建完成后，不要忘记重新编译项目：
+
+```
+cd ~/(工作空间名字)
+colcon build --symlink-install
+```
+
+同时，在`robot.urdf.xacro`文件当中引用我们新建的xacro文件：
+
+`<xacro:include filename="gazebo_control.xacro"/>`
+
+接下来，我们就可以开始添加插件了([完整代码]())：
+
+```    
+    <gazebo>
+        <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+            <!-- 这里添加插件参数 -->
+        </plugin>
+    </gazebo>
+```
+
