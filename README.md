@@ -18,6 +18,10 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 见[model.md](https://github.com/BIT-Gs/mobile_bot/blob/main/model.md)
 
+![URDF/XACRO建模](img/WheelsInRviz2.gif)
+
 ## Gazebo仿真
 
 见[Simulation.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Simulation.md)
+
+![Gazebo仿真](img/RobotMoving3.gif)
