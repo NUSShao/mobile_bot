@@ -124,13 +124,119 @@ colcon build --symlink-install
 
 `<xacro:include filename="gazebo_control.xacro"/>`
 
-接下来，我们就可以开始添加插件了([完整代码]())：
+接下来，我们就可以开始添加插件了([完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/gazebo_control.xacro))：
 
 ```    
     <gazebo>
-        <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+        <plugin name="diff_drive" 
+                filename="libgazebo_ros_diff_drive.so">
             <!-- 这里添加插件参数 -->
         </plugin>
     </gazebo>
 ```
 
+随后，我们来编辑插件的轮子参数：
+
+```
+    <!-- Wheel Information -->
+    <left_joint>base_left_wheel_joint</left_joint>
+    <right_joint>base_right_wheel_joint</right_joint>
+    <wheel_separation>0.35</wheel_separation>
+    <wheel_diameter>0.1</wheel_diameter>
+```
+
+其中，`left_joint`和`right_joint`定义了机器人的左右驱动轮，`wheel_separation`定义了轮距(两个驱动轮在旋转轴方向上的间距)，`wheel_diameter`定义了驱动轮的直径。
+
+接下来，我们编辑一些上限：
+
+```
+    <!-- Wheel Limits -->
+    <max_wheel_torque>200</max_wheel_torque>
+    <max_wheel_acceleration>10.0</max_wheel_acceleration>
+```
+
+其中，`max_wheel_torque`定义了施加在驱动轮上的最大扭矩，`max_wheel_acceleration`定义了驱动轮的最大加速度。
+
+最后，是一些插件的输出选项：
+
+```
+    <!-- Output -->
+    <odometry_frame>odom</odometry_frame>
+    <robot_base_frame>base_link</robot_base_frame>
+
+    <publish_odom>true</publish_odom>
+    <publish_odom_tf>true</publish_odom_tf>
+    <publish_wheel_tf>true</publish_wheel_tf>
+```
+
+其中，`odometry_frame`代表里程计坐标，`robot_base_frame`代表机器人的基准坐标，`publish_odom`、`publish_odom_tf`、`publish_wheel_tf`代表了插件要向ROS2中发布这几项信息，即里程计、里程计的Transform以及驱动轮的Transform。
+
+## 在Gazebo中使用控制插件
+
+在插件编写完成之后，我们在Terminal中按下`Ctrl+C`，重新launch我们的启动文件`rsp_sim.launch.py`。
+
+此外，我们另启动一个Terminal，我们将在这个Terminal中打开ROS2遥控包中的`teleop_twist_keyboard`节点，它可以让我们用键盘输入来发布ROS2中的`twist`格式的数据，进而操控小车行动：
+
+`ros2 run teleop_twist_keyboard teleop_twist_keyboard`
+
+我们用鼠标点击Terminal，按下`I`键，小车前进：
+
+![按下`I`键，小车前进](img/RobotMoving1.gif)
+
+值得注意的是，此时小车的脚轮还没有被设置为无摩擦，因此小车在前进的过程中会有顿挫。
+
+## 将脚轮(Caster Wheel)设置为无摩擦(Frictionless)
+
+从`robot_core.xacro`文件中找到脚轮（Caster Wheel）的Gazebo标签位置，添加摩擦系数：
+
+```
+    <gazebo reference="caster_wheel_link">
+        <material>Gazebo/Black</material>
+        <mu1 value="0.001" />
+        <mu2 value="0.001" />
+    </gazebo>
+```
+
+注意，这里没有直接设置`μ=0`，是为了避免`0`出现在分母上的问题。
+
+在完成之后，我们在Terminal中按下`Ctrl+C`，重新launch我们的启动文件`rsp_sim.launch.py`。
+然后我们在Gazebo中重新使用遥控节点控制小车移动：
+
+![重新使用遥控节点控制小车移动](img/RobotMoving2.gif)
+
+现在，我们就可以让小车平滑地移动了。
+
+## 控制小车自由移动
+
+为了让事情更有趣，我们可以在Gazebo中按下`Ctrl+B`召出建筑编辑器：
+
+![建筑编辑器](img/CreateBuilding.jpg)
+
+创建完成后，我们按下`Ctrl+X`保存退出。
+
+接着，我们就可以用遥控插件操纵小车走出这间屋子了：
+
+![操纵小车](img/RobotMoving3.gif)
+
+## 在Rviz2中监视小车状态
+
+Rviz2与Gazebo的关系，就如同我们用电脑（Rviz）去监测估计现实世界（Gazebo）中的机器人。
+
+新建一个Terminal，输入`rviz2`打开Rviz2界面。
+
+在左上角的`Fixed Frame`选项中，选择`odom`。
+
+按下`Ctrl+N`，新建一个TF选项。
+
+再次按下`Ctrl+N`，新建一个RobotModel选项，将其中的`Description topic`选择为`/robot_description`
+
+此时，我们再次遥控小车移动，就能在两个窗口中同时看到小车移动：
+
+![两个窗口中同时看到小车移动](img/RobotMoving4.gif)
+
+最后，不要忘了保存Rviz2 config(`Ctrl+Shift+S`)，以便下次在Rviz2中监视小车:
+
+```
+cd ~/(你的工作空间名字)/src/(你的project名字)
+rviz2 -d config/drive_bot.rviz
+```
