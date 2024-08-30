@@ -25,3 +25,10 @@ Note that each directory currently has at least one file in it to ensure that gi
 见[Simulation.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Simulation.md)
 
 ![Gazebo仿真](img/RobotMoving3.gif)
+
+## Gazebo & Lidar
+
+见[Lidar.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Lidar.md)
+
+![雷达信息会随着小车位置而更新](img/LidarMoving1.gif)
+
