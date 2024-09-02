@@ -25,7 +25,7 @@ colcon build --symlink-install
 
 同时，在`robot.urdf.xacro`文件当中引用我们新建的xacro文件：
 
-`<xacro:include filename="gazebo_control.xacro"/>`
+`<xacro:include filename="lidar.xacro"/>`
 
 接下来，我们就可以开始添加lidar了。
 

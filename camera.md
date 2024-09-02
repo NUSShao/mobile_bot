@@ -26,4 +26,99 @@ ROS2提供了摄像头驱动节点（Driver Node），用来设置摄像头的�
 
 ![ROS摄像头](img/CameraCoordinates.jpg)
 
-## 
+## 在Gazebo仿真环境中为小车添加摄像头
+
+### 添加摄像头插件
+
+为了在Gazebo中添加雷达，我们在`~/(工作空间名字)/src/(package名字)/description`路径下新建一个`camera.xacro`文件，用于添加雷达插件。在新建完成后，不要忘记重新编译项目：
+
+```
+cd ~/(工作空间名字)
+colcon build --symlink-install
+```
+
+同时，在`robot.urdf.xacro`文件当中引用我们新建的xacro文件：
+
+`<xacro:include filename="camera.xacro"/>`
+
+接下来，我们就可以开始添加camera了（[完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/camera.xacro)）：
+
+```
+    <joint name="chassis_camera_joint" type="fixed">
+
+        <parent link="chassis_link" />
+        <child link="camera_link" />
+        <origin xyz="0.305 0 0.08" rpy="0 0 0" />
+
+    </joint>
+
+    <link name="camera_link">
+
+        <visual>
+            <geometry>
+                <box size="0.01 0.03 0.03" />
+            </geometry>
+            <material name="red" />
+        </visual>
+
+    </link>
+```
+
+同时，设置一个与camera_joint位置相同的关节，用于将ROS2标准的坐标系转换为摄像机图像标准坐标系：
+
+```
+    <joint name="chassis_camera_optical_joint" type="fixed">
+
+        <parent link="camera_link" />
+        <child link="camera_optical_link" />
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+
+    </joint>
+
+    <link name="camera_optical_link"></link>
+```
+
+完成之后，我们运行launch文件，就可以看到新建的摄像头link了：
+
+![新建的摄像头link](img/RobotWithCamera.jpg)
+
+接下来，我们进一步完善我们摄像头的gazebo标签：
+
+```
+        <!-- Sensor tag for camera -->
+        <sensor name="camera" type="camera">
+
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <!-- camera params -->
+            <camera>
+                <!-- Field of Vision -->
+                <horizontal_fov>1.089</horizontal_fov>
+                <!-- image params -->
+                <image>
+                    <format>R8G8B8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <!-- image clip -->
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+
+            </camera>
+            <!-- gazebo camera control plugin -->
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>camera_link_optical</frame_name>
+            </plugin>
+```
+
+完成后，我们保存，将`lidar.xcaro`中的`visual`标签设置为`false`（你可以按下`Ctrl+F`来搜索'visual'）。随后，再次运行launch文件，可以看到摄像头的信息：
+
+![看到摄像头的信息](img/RobotWithCamera2.jpg)
+
+然后，我们在terminal中再次打开遥控节点，看下图像能否随着小车位置更新：
+
+![图像随着小车位置更新](img/CameraMoving.gif)
+
