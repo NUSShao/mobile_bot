@@ -32,3 +32,8 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 ![雷达信息会随着小车位置而更新](img/LidarMoving1.gif)
 
+## Gazebo & Camera
+
+见[Camera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Lidar.md)
+
+![图像随着小车位置更新](img/CameraMoving.gif)
