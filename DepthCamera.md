@@ -83,3 +83,5 @@ colcon build --symlink-install
 
     </gazebo>
 ```
+
+### 由于虚拟机无法渲染3D点云，这里的渲染结果后续再更~
