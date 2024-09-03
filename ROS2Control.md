@@ -60,3 +60,112 @@ ROS2 Control为我们提供了抽象硬件接口，分为可以读写的指令�
 
 ## 在URDF文件中添加ROS2 Control插件
 
+首先，在terminal中安装一些我们需要的包：
+
+`sudo apt install ros-(ROS2版本)-ros2-control ros-(ROS2版本)-ros2-controllers ros-(ROS2版本)-gazebo-ros2-control`
+
+接下来，我们在`~/(工作空间名字)/src/(package名字)/description`路径下新建一个`ros2_control.xacro`文件，用于添加ROS2控制插件。在新建完成后，不要忘记重新编译项目：
+
+```
+cd ~/(工作空间名字)
+colcon build --symlink-install
+```
+
+同时，在`robot.urdf.xacro`文件当中，我们注释掉（`Ctrl+/`）对于`<gazebo_control.xacro>`的引用，并引用我们新建的xacro文件：
+
+`<xacro:include filename="ros2_control.xacro"/>`
+
+接下来，我们就可以开始添加ros2_control标签了（[完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/ros2_control.xacro)）：
+
+```
+    <ros2_control name="GazeboSystem" type="system">
+        <!-- hardware type to be a gazebo system -->
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <joint name="base_left_wheel_joint">
+            <!-- command interfaces -->
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <!-- state interfaces -->
+            <state_interface name="velocity" />
+            <state_interface name="position" />
+            
+        </joint>
+
+        <joint name="base_right_wheel_joint">
+            <!-- command interfaces -->
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <!-- state interfaces -->
+            <state_interface name="velocity" />
+            <state_interface name="position" />
+            
+        </joint>
+
+    </ros2_control>
+```
+
+这里的ros2 control标签将ROS2中的硬件接口提供给控制器管理器。
+
+在编写Gazebo插件之前，我们需要编写一个用于定义控制器的YAML文件（`my_controllers.yaml`）：
+
+我们在`~/(工作空间名字)/src/(package名字)/config`路径下新建一个`my_controllers.yaml`文件，用于编写定义控制器的YAML文件。在新建完成后，不要忘记重新编译项目：
+
+```
+cd ~/(工作空间名字)
+colcon build --symlink-install
+```
+
+接下来，我们来编写YAML文件（[完整代码](https://github.com/NUSShao/mobile_bot/blob/main/config/my_controllers.yaml)）：
+
+```
+controller_manager:
+  ros__parameters:
+    update_rate: 30
+    use_sim_time: true
+
+    diff_controller:
+      type: diff_drive_controller/DiffDriveController
+
+    joint_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+diff_controller:
+  ros__parameters:
+    # Set to a higher rate than the update rate to ensure we can catch each loop
+    publish_rate: 50.0
+
+    base_frame_id: base_link
+
+    left_wheel_names: ['left_wheel_joint']
+    right_wheel_names: ['right_wheel_joint']
+    wheel_separation: 0.35
+    wheel_radius: 0.05
+
+    use_stamped_vel: false
+```
+
+接下来，我们编写Gazebo插件，用于在Gazebo中使用ros2 control（[完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/ros2_control.xacro)）：
+
+```
+    <gazebo>
+        <plugin name="diff_drive" filename="libgazebo.ros_diff_drive.so">
+            <parameters>$(find （package名字）)/config/my_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+```
+
+随后，我们运行launch文件，可以看到[gazebo_ros2_control]相关的启动信息。我们在另一个terminal中输入：
+
+`ros2 control list_hardware_interfaces`
+
+可以看到，现在我们的指令接口和状态接口都可以被正确加载了：
+
+![指令接口和状态接口](img/ListHardwareInterfaces.jpg)
+
