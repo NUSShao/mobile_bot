@@ -42,4 +42,10 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 见[DepthCamera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/DepthCamera.md)
 
-![图像随着小车位置更新](img/CameraMoving.gif)
+![深度图像随着小车位置更新]()
+
+## Gazebo & ROS2 Control
+
+见[DepthCamera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/DepthCamera.md)
+
+![ROS2 Control]()
