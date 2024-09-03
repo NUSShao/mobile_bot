@@ -35,33 +35,7 @@
 
     <gazebo>
         <plugin name="diff_drive" filename="libgazebo.ros_diff_drive.so">
-
-        </plugin>
-    </gazebo>
-
-    <gazebo>
-        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            
-            <!-- Wheel Information -->
-            <left_joint>base_left_wheel_joint</left_joint>
-            <right_joint>base_right_wheel_joint</right_joint>
-            <wheel_separation>0.35</wheel_separation>
-            <wheel_diameter>0.1</wheel_diameter>
-
-
-            <!-- Wheel Limits -->
-            <max_wheel_torque>200</max_wheel_torque>
-            <max_wheel_acceleration>10.0</max_wheel_acceleration>
-
-            
-            <!-- Output -->
-            <odometry_frame>odom</odometry_frame>
-            <robot_base_frame>base_link</robot_base_frame>
-
-            <publish_odom>true</publish_odom>
-            <publish_odom_tf>true</publish_odom_tf>
-            <publish_wheel_tf>true</publish_wheel_tf>
-
+            <parameters>$(find mobile_bot)/config/my_controllers.yaml</parameters>
         </plugin>
     </gazebo>
 
