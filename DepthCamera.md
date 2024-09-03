@@ -44,4 +44,42 @@ colcon build --symlink-install
 
 `<xacro:include filename="depth_camera.xacro"/>`
 
-接下来，我们就可以开始添加camera了（[完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/depth_camera.xacro)）：
+这里，我们省略掉关节和link的定义部分（因为和RGB相机完全一样）。接下来，我们就可以开始添加深度相机插件了（[完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/depth_camera.xacro)）：
+
+```
+    <gazebo reference="depth_camera_link">
+        
+        <!-- Color definition in Gazebo -->
+        <material>Gazebo/Black</material>
+        <!-- Sensor tag for camera -->
+        <sensor name="depth_camera" type="depth">
+
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <!-- camera params -->
+            <camera>
+                <!-- Field of Vision -->
+                <horizontal_fov>1.089</horizontal_fov>
+                <!-- image params -->
+                <image>
+                    <format>R8G8B8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <!-- image clip -->
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+
+            </camera>
+            <!-- gazebo camera control plugin -->
+            <plugin name="depth_camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>depth_camera_link_optical</frame_name>
+            </plugin>
+
+        </sensor>
+
+    </gazebo>
+```
