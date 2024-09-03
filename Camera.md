@@ -41,7 +41,7 @@ colcon build --symlink-install
 
 `<xacro:include filename="camera.xacro"/>`
 
-接下来，我们就可以开始添加camera了（[完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/camera.xacro)）：
+接下来，我们就可以开始添加camera了（[完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/camera.xacro)）：
 
 ```
     <joint name="chassis_camera_joint" type="fixed">

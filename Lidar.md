@@ -29,7 +29,7 @@ colcon build --symlink-install
 
 接下来，我们就可以开始添加lidar了。
 
-首先，我们在chassis（底盘）上创建一个joint，用来固定雷达（这里原点位置没有校准，最终数值见[完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/lidar.xacro)）：
+首先，我们在chassis（底盘）上创建一个joint，用来固定雷达（这里原点位置没有校准，最终数值见[完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/lidar.xacro)）：
 
 ```
     <joint name="chassis_laser_joint" type="fixed">
