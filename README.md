@@ -34,6 +34,12 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 ## Gazebo & Camera
 
-见[Camera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Lidar.md)
+见[Camera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Camera.md)
+
+![图像随着小车位置更新](img/CameraMoving.gif)
+
+## Gazebo & Depth Camera
+
+见[DepthCamera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/DepthCamera.md)
 
 ![图像随着小车位置更新](img/CameraMoving.gif)
