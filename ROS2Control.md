@@ -169,3 +169,31 @@ diff_controller:
 
 ![指令接口和状态接口](img/ListHardwareInterfaces.jpg)
 
+接下来，我们在terminal中激活我们定义的控制器：
+
+```
+ros2 run controller_manager spawner diff_controller
+ros2 run controller_manager spawner joint_broadcaster
+```
+
+此时，我们如果再次运行遥控器，就必须要把`cmd_vel`重新映射到`diff_controller/cmd_vel_unstamped`这个topic上才可以正常遥控小车：
+
+`ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=/diff_controller/cmd_vel_unstamped`
+
+接下来，我们在`rsp_sim.launch.py`文件当中添加两个控制器的spawner：
+
+```
+    diff_drive_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["diff_controller"],
+    )
+
+    joint_broad_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_broadcaster"],
+    )
+```
+
+然后，在`LaunchDescription`中添加`diff_drive_spawner`和`joint_broad_spawner`，这样就可以在运行launch文件的同时，激活控制器了。
