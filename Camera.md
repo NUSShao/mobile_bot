@@ -122,3 +122,35 @@ colcon build --symlink-install
 
 ![图像随着小车位置更新](img/CameraMoving.gif)
 
+## 图像压缩
+
+每秒钟10张，每张640x480分辨率的图像信息，对于硬件是不小的负荷，因此我们需要对raw image（原图像）进行压缩处理。这里我们用到的是ROS2的`image transfer plugins`，打开terminal并输入：
+
+`sudo apt install ros-（ROS版本）-image-transport-plugins`
+
+此时，我们再次运行launch文件，并且在terminal中输入：
+
+`ros2 topic list`
+
+就可以看见`/camera/image_raw/compressed`、`/camera/image_raw/compressedDepth`、`/camera/image_raw/theora`这几个topic了。
+
+可惜的是，Rviz2并不能够处理压缩后的图像数据，因此我们需要安装另一个功能：
+
+`sudo apt install ros-（ROS版本）-rqt-image-view`
+
+安装完成后，在terminal中运行它：
+
+`ros2 run rqt_image_view rqt_image_view`
+
+现在，我们可以在左上角的topic list中看到压缩图像对应的topic：
+
+![压缩图像对应的topic](img/RqtImageView.jpg)
+
+有时，我们需要在pc端接收机器人端传回的压缩图像，并进行解压缩。我们可以在terminal中通过运行以下指令来发布一个解压缩后的图像topic：
+
+`ros2 run image_transport republish compressed raw --ros-args -r in/compressed:=/camera/image_raw/compressed -r out:=camera/image_raw/uncompressed`
+
+现在，我们可以在`rqt_image_view`中看到我们解压缩后的图像topic了：
+
+![解压缩后的图像topic](img/RqtImageView2.gif)
+
