@@ -12,40 +12,40 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 ## 准备工作
 
-见[Setup.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Setup.md)
+见[Setup.md](https://github.com/NUSShao/mobile_bot/blob/main/Setup.md)
 
 ## URDF/XACRO建模
 
-见[model.md](https://github.com/BIT-Gs/mobile_bot/blob/main/model.md)
+见[model.md](https://github.com/NUSShao/mobile_bot/blob/main/model.md)
 
 ![URDF/XACRO建模](img/WheelsInRviz2.gif)
 
 ## Gazebo仿真
 
-见[Simulation.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Simulation.md)
+见[Simulation.md](https://github.com/NUSShao/mobile_bot/blob/main/Simulation.md)
 
 ![Gazebo仿真](img/RobotMoving3.gif)
 
 ## Gazebo & Lidar
 
-见[Lidar.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Lidar.md)
+见[Lidar.md](https://github.com/NUSShao/mobile_bot/blob/main/Lidar.md)
 
 ![雷达信息会随着小车位置而更新](img/LidarMoving1.gif)
 
 ## Gazebo & Camera
 
-见[Camera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/Camera.md)
+见[Camera.md](https://github.com/NUSShao/mobile_bot/blob/main/Camera.md)
 
 ![图像随着小车位置更新](img/CameraMoving.gif)
 
 ## Gazebo & Depth Camera
 
-见[DepthCamera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/DepthCamera.md)
+见[DepthCamera.md](https://github.com/NUSShao/mobile_bot/blob/main/DepthCamera.md)
 
 暂时没完成，后续上图，可以先看后面的章节，不影响理解。
 
 ## Gazebo & ROS2 Control
 
-见[ROS2Control.md](https://github.com/BIT-Gs/mobile_bot/blob/main/ROS2Control.md)
+见[ROS2Control.md](https://github.com/NUSShao/mobile_bot/blob/main/ROS2Control.md)
 
 ![实现远程控制](img/RemoteControl.gif)
