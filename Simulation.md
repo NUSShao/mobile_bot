@@ -54,7 +54,7 @@ colcon build --symlink-install
 
 为此，我们需要为每一个Link添加一个Gazebo插件，来赋予小车正确的颜色。
 
-这里还是以Chassis Link为例：([完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/robot_core.xacro))
+这里还是以Chassis Link为例：([完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/robot_core.xacro))
 
 ```
 <link name="chassis_link">
@@ -124,7 +124,7 @@ colcon build --symlink-install
 
 `<xacro:include filename="gazebo_control.xacro"/>`
 
-接下来，我们就可以开始添加插件了([完整代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/gazebo_control.xacro))：
+接下来，我们就可以开始添加插件了([完整代码](https://github.com/NUSShao/mobile_bot/blob/main/description/gazebo_control.xacro))：
 
 ```    
     <gazebo>

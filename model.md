@@ -93,7 +93,7 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 
 这里为了方便大家理解文件的构成，把整体代码放上去了。
 
-后面为了简洁性，只展示新增的代码片段（[整体代码](https://github.com/BIT-Gs/mobile_bot/blob/main/description/robot_core.xacro)）
+后面为了简洁性，只展示新增的代码片段（[整体代码](https://github.com/NUSShao/mobile_bot/blob/main/description/robot_core.xacro)）
 
 ### 底盘（chassis link）
 
