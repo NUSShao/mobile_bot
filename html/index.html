@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robot Controller</title>
+    <style>
+        button {
+            width: 100px;
+            height: 50px;
+            font-size: 18px;
+            margin: 10px;
+        }
+    </style>
     <script src="https://unpkg.com/eventemitter2@6.4.6/lib/eventemitter2.js"></script>
     <script src="https://unpkg.com/roslib@1.3.0/build/roslib.min.js"></script>
 </head>
@@ -19,7 +27,7 @@
     <script type="text/javascript">
         // 连接到rosbridge WebSocket服务器
         var ros = new ROSLIB.Ros({
-            url: 'ws://192.168.37.128:9090'
+            url: 'ws://172.20.10.6:9090'    //这里改为你自己的虚拟机ip地址！！！
         });
 
         ros.on('connection', function() {
@@ -37,7 +45,7 @@
         // 创建一个发布者，发布到 /diff_controller/cmd_vel_unstamped 话题
         var cmdVel = new ROSLIB.Topic({
             ros: ros,
-            name: '/diff_controller/cmd_vel_unstamped',
+            name: '/diff_controller/cmd_vel_unstamped',     //这里检查一下你自己的控制器名字对不对！！！
             messageType: 'geometry_msgs/msg/Twist'
         });
 
@@ -57,26 +65,54 @@
             });
         }
 
-        // 绑定按钮事件
-        document.getElementById('forward').onclick = function() {
-            cmdVel.publish(createTwist(0.5, 0.0));
-        };
+        // Helper function to handle touch events
+        function handleTouchStart(event, linearX, angularZ) {
+            event.preventDefault(); // Prevents default scrolling behavior on touch devices
+            var twist = createTwist(linearX, angularZ);
+            console.log('Sending message:', twist);
+            cmdVel.publish(twist);
+        }
 
-        document.getElementById('backward').onclick = function() {
-            cmdVel.publish(createTwist(-0.5, 0.0));
-        };
+        document.getElementById('forward').addEventListener('touchstart', function(event) {
+            handleTouchStart(event, 0.5, 0.0);
+        });
 
-        document.getElementById('left').onclick = function() {
-            cmdVel.publish(createTwist(0.0, 0.5));
-        };
+        document.getElementById('backward').addEventListener('touchstart', function(event) {
+            handleTouchStart(event, -0.5, 0.0);
+        });
 
-        document.getElementById('right').onclick = function() {
-            cmdVel.publish(createTwist(0.0, -0.5));
-        };
+        document.getElementById('left').addEventListener('touchstart', function(event) {
+            handleTouchStart(event, 0.0, 0.5);
+        });
 
-        document.getElementById('stop').onclick = function() {
-            cmdVel.publish(createTwist(0.0, 0.0));
-        };
+        document.getElementById('right').addEventListener('touchstart', function(event) {
+            handleTouchStart(event, 0.0, -0.5);
+        });
+
+        document.getElementById('stop').addEventListener('touchstart', function(event) {
+            handleTouchStart(event, 0.0, 0.0);
+        });
+
+        // Fallback for click event (non-touch devices)
+        document.getElementById('forward').addEventListener('click', function() {
+            handleTouchStart(event, 0.5, 0.0);
+        });
+
+        document.getElementById('backward').addEventListener('click', function() {
+            handleTouchStart(event, -0.5, 0.0);
+        });
+
+        document.getElementById('left').addEventListener('click', function() {
+            handleTouchStart(event, 0.0, 0.5);
+        });
+
+        document.getElementById('right').addEventListener('click', function() {
+            handleTouchStart(event, 0.0, -0.5);
+        });
+
+        document.getElementById('stop').addEventListener('click', function() {
+            handleTouchStart(event, 0.0, 0.0);
+        });
     </script>
 </body>
 </html>
