@@ -12,6 +12,8 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 本项目记录了我参照Josh Newans的系列视频进行ROS2&Gazebo学习的详细流程，其中所有的代码细节都有呈现，没有跳步骤，和我一样的初学者可以放心食用。
 
+后续我会另外开启一个项目，用来存放搭建树莓派实物差速小车的代码。
+
 ## 准备工作
 
 见[Setup.md](https://github.com/NUSShao/mobile_bot/blob/main/Setup.md)
