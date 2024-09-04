@@ -197,3 +197,52 @@ ros2 run controller_manager spawner joint_broadcaster
 ```
 
 然后，在`LaunchDescription`中添加`diff_drive_spawner`和`joint_broad_spawner`，这样就可以在运行launch文件的同时，激活控制器了。
+
+## 用移动设备（手机、平板）控制Gazebo中的机器人
+
+**事先声明，为了实现这一功能，你的移动设备必须和电脑连接同一网络（最简单的就是像我一样开手机热点）。**
+
+为了后续操作方便，这里先介绍虚拟机的网络设置操作（桥接模式才可以用远程设备发布消息到虚拟机上）。
+
+首先，在虚拟机界面按下`Ctrl+Alt`以切回windows系统，再按下`Ctrl+D`唤出虚拟机设置界面；
+
+![虚拟机设置界面](img/VMNetworkSetting.jpg)
+
+然后按照上图，将虚拟机网络适配器中的连接模式改为**桥接模式**，保存退出，并重启虚拟机。
+
+重启后，我们打开一个按下`Ctrl+Alt+T`打开一个terminal，输入`ifconfig`来查看ip地址：
+
+![输入`ifconfig`来查看ip地址](img/VMNetworkSetting2.jpg)
+
+这时，我们就得到了自己的虚拟机ip地址。
+
+接下来，我们在project根目录下新建一个`html`子文件夹，新建一个[html服务器文件](https://github.com/NUSShao/mobile_bot/blob/main/html/index.html)，用来生成一些控制按钮，这些按钮绑定各自的事件，通过触发事件来向虚拟机中的ROS topic发布Twist消息，进而驱动小车。
+
+安装`rosbridge_server`，并且运行websocket的launch文件：
+
+```
+sudo apt install ros-(ROS版本)-rosbridge-server
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+```
+
+此命令会启动一个WebSocke 服务器，默认监听在端口`9090`。
+
+随后，在虚拟机端查看ip，在terminal中输入：
+
+`ifconfig`
+
+然后在虚拟机端启动一个http服务器：
+
+```
+cd ~/(工作空间名字)/src/（project名字）/html
+python3 -m http.server 8000
+```
+
+随后，我们先在虚拟机中访问`(虚拟机ip):8000`，试验一下效果：
+
+![虚拟机试验一下效果](img/VMControl.gif)
+
+然后，在移动端设备浏览器中访问`(虚拟机ip):8000`，就可以实现远程控制了：
+
+![实现远程控制](img/RemoteControl.gif)
+

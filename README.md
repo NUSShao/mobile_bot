@@ -42,10 +42,10 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 见[DepthCamera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/DepthCamera.md)
 
-![深度图像随着小车位置更新]()
+暂时没完成，后续上图，可以先看后面的章节，不影响理解。
 
 ## Gazebo & ROS2 Control
 
-见[DepthCamera.md](https://github.com/BIT-Gs/mobile_bot/blob/main/DepthCamera.md)
+见[ROS2Control.md](https://github.com/BIT-Gs/mobile_bot/blob/main/ROS2Control.md)
 
-![ROS2 Control]()
+![实现远程控制](img/RemoteControl.gif)
