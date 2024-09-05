@@ -138,6 +138,9 @@ colcon build --symlink-install
 
 然后，我们在terminal中输入以下指令，来启动状态发布器以及我们刚才创建的Gazebo world文件：
 
+
+### **!!!请注意，这里如果你指定一个world进入gazebo，有可能会因为模型库没有下载的原因而打不开gazebo!!!**
+
 ```
 cd ~/(工作空间名字)/src/(project名字)
 ros2 launch mobile_bot rsp_sim.launch.py world:=worlds/(world文件名字).world
