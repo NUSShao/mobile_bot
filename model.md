@@ -26,7 +26,12 @@ Xacro 是一种基于 XML 的宏扩展格式，用于生成更简洁和模块化
 
 ## 编写机器人外观框架XACRO文件
 
+开始之前，我们先安装一下ROS2的xcaro扩展，按下`Ctrl+Shift+T`进入终端，输入：
+
+```sudo apt install ros-(ROS版本)-xacro```
+
 首先，Josh Newans提供的模板当中的description文件夹下，有一个robot.urdf.xacro范例文件。
+
 ```
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
