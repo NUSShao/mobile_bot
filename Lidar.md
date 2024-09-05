@@ -136,8 +136,9 @@ colcon build --symlink-install
 
 在创建好模型之后，我们按下`Ctrl+Shift+S`，将world文件保存在`~/(工作空间名字)/src/(project名字)/worlds`目录下，记得以world后缀来结束。
 
-然后，我们在terminal中输入以下指令，来启动状态发布器以及我们刚才创建的Gazebo world文件：
+### **!!!请注意，这里请不要在生成了机器人实体的情况下保存世界，会导致后续对机器人的更新无法加载到这个世界里!!!**
 
+然后，我们在terminal中输入以下指令，来启动状态发布器以及我们刚才创建的Gazebo world文件：
 
 ### **!!!请注意，这里如果你指定一个world进入gazebo，有可能会因为模型库没有下载的原因而打不开gazebo!!!**
 

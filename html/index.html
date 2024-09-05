@@ -27,7 +27,7 @@
     <script type="text/javascript">
         // 连接到rosbridge WebSocket服务器
         var ros = new ROSLIB.Ros({
-            url: 'ws://172.20.10.6:9090'    //这里改为你自己的虚拟机ip地址！！！
+            url: 'ws://172.20.10.7:9090'    //这里改为你自己的虚拟机(or你的pc的ip，如果你没有用虚拟机)ip地址！！！
         });
 
         ros.on('connection', function() {
