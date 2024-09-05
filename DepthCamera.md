@@ -88,7 +88,22 @@ colcon build --symlink-install
 
 ![深度相机已经加载](img/RobotWithDepthCamera.png)
 
-接下来，我们在terminal中打开`rivz2`：
+接下来，我们在terminal中打开`rivz2`，按下`Ctrl+N`新建一个`pointcloud2`选项，并且将`topic`设置好，就可以在rviz2中看到深度相机返回的信息了：
 
+![rviz2中看到深度相机返回的信息](img/depth.gif)
 
+随后，我们要对gazebo插件进行一下完善，添加两个标签：
+
+```
+    <!-- gazebo camera control plugin -->
+    <plugin name="depth_camera_controller" filename="libgazebo_ros_camera.so">
+        <frame_name>depth_camera_optical_link</frame_name>
+        <min_depth>0.05</min_depth>
+        <max_depth>8.0</max_depth>
+    </plugin>
+```
+
+重新启动launch文件，我们这时在rviz2中就可以看到深度图像了：
+
+![深度图像](img/depthpicture.png)
 

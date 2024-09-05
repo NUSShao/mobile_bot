@@ -46,7 +46,7 @@ Note that each directory currently has at least one file in it to ensure that gi
 
 见[DepthCamera.md](https://github.com/NUSShao/mobile_bot/blob/main/DepthCamera.md)
 
-暂时没完成，后续上图，可以先看后面的章节，不影响理解。
+![rviz2中看到深度相机返回的信息](img/depth.gif)
 
 ## Gazebo & ROS2 Control
 
