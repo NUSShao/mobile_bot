@@ -82,11 +82,11 @@
         });
 
         document.getElementById('left').addEventListener('touchstart', function(event) {
-            handleTouchStart(event, 0.0, 0.5);
+            handleTouchStart(event, 0.0, 1.0);
         });
 
         document.getElementById('right').addEventListener('touchstart', function(event) {
-            handleTouchStart(event, 0.0, -0.5);
+            handleTouchStart(event, 0.0, -1.0);
         });
 
         document.getElementById('stop').addEventListener('touchstart', function(event) {
@@ -103,11 +103,11 @@
         });
 
         document.getElementById('left').addEventListener('click', function() {
-            handleTouchStart(event, 0.0, 0.5);
+            handleTouchStart(event, 0.0, 1.0);
         });
 
         document.getElementById('right').addEventListener('click', function() {
-            handleTouchStart(event, 0.0, -0.5);
+            handleTouchStart(event, 0.0, -1.0);
         });
 
         document.getElementById('stop').addEventListener('click', function() {

@@ -84,4 +84,11 @@ colcon build --symlink-install
     </gazebo>
 ```
 
-### 由于虚拟机无法渲染3D点云，这里的渲染结果后续再更~
+完成编辑之后，我们重新运行launch文件，可以看到小车的深度相机已经加载出来了：
+
+![深度相机已经加载](img/RobotWithDepthCamera.png)
+
+接下来，我们在terminal中打开`rivz2`：
+
+
+
